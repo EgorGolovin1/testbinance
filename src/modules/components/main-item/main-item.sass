@@ -1,0 +1,60 @@
+.main-item
+    display: flex
+    z-index: 15
+    &_picture
+        width: 300px
+        height: 300px
+        margin-left: 50px
+        z-index: 15
+    &_price,&_name
+        font-size: 40px
+        color: white
+        margin: 50px 0 0 50px
+    &_name
+        font-size: 60px
+        font-weight: 700
+        text-transform: uppercase
+    &_info
+        min-width: 100px
+        width: fit-content
+        height: 40px
+        background: green
+        padding: 5px 5px 10px 35px
+        position: relative
+        border-radius: 10px
+        &.down
+            background: red
+            padding-left: 10px 
+            &::before,&::after
+                content: none
+        &::before
+            content: ''
+            width: 20px
+            height: 4px
+            position: absolute
+            background: white
+            left: 7px
+            top: 28px
+        &::after
+            content: ''
+            width: 4px
+            height: 20px
+            position: absolute
+            background: white
+            left: 15px
+            top: 20px
+            
+            // transform: translateY(-30%)
+        // &::after
+        //     content: ''
+        //     border-top: 2px solid black
+        //     border-right: 2px solid black
+        //     width: 11px
+        //     height: 11px
+        //     transform: rotate(45deg)
+        //     position: absolute
+        //     bottom: 2px
+        //     left: 11px 
+
+.info-wrapper
+    z-index: 15
