@@ -12,7 +12,15 @@ import {
 
 import "./crypto-item.sass";
 
-const CryptoItem = ({ src, id, name, abbreviation, main, favorite }) => {
+const CryptoItem = ({
+  src,
+  id,
+  name,
+  abbreviation,
+  main,
+  favorite,
+  openModal,
+}) => {
   const dispatch = useDispatch();
 
   const makeMain = () => {
@@ -23,11 +31,12 @@ const CryptoItem = ({ src, id, name, abbreviation, main, favorite }) => {
 
   const doFavorite = () => {
     dispatch(toggleToken(id));
+    openModal();
   };
 
   return (
     <div className="item gradient-border  ">
-      <button
+      {/* <button
         onClick={() => doFavorite()}
         className={classNames("star", { favorite: favorite })}
       >
@@ -45,12 +54,18 @@ const CryptoItem = ({ src, id, name, abbreviation, main, favorite }) => {
             l-16.233-94.629l69.339-67.583C329.501,138.057,330.972,132.096,329.208,126.666z"
           />
         </svg>
+      </button> */}
+      <button
+        onClick={() => doFavorite()}
+        className={classNames("star", { favorite: favorite })}
+      >
+        <img alt="111" className="picture" src="./view.svg" />
       </button>
       <button
         onClick={() => makeMain()}
         className={classNames("item_button", { main: main })}
       >
-        <img src={src} alt="logo" className="item_picture" id={id} />
+        <img src={src} alt="./search.svg" className="item_picture" id={id} />
         {name}
       </button>
     </div>
@@ -64,6 +79,7 @@ CryptoItem.propTypes = {
   abbreviation: PropTypes.string,
   main: PropTypes.bool,
   favorite: PropTypes.bool,
+  openModal: PropTypes.func,
 };
 
 export default CryptoItem;

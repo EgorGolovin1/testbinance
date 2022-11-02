@@ -24,6 +24,10 @@ const FILTERS_BTN = [
     text: "Losers",
     id: "losers",
   },
+  {
+    text: "MyWallet",
+    id: "wallet",
+  },
 ];
 
 const FilterMenu = ({ activeFilter }) => {

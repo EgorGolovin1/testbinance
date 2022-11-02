@@ -13,6 +13,20 @@ const MainItem = ({ filteredCryptoArr, price, market }) => {
           <img src={item.src} alt="token" className="main-item_picture" />
           <div className="info-wrapper">
             <div className="main-item_name">{item.name}</div>
+            <button className="main-item_details">Details</button>
+            <div className="main-item_amount">
+              {item.myAmount ? `My tokens: ${item.myAmount}` : ""}
+            </div>
+            <div className="main-item_annotation">{item.annotation}</div>
+            <div className="main-item_balance">
+              {" "}
+              {item.myAmount
+                ? `My balance: ${
+                    Math.round(item.myAmount * price.USD * Math.pow(10, 2)) /
+                    Math.pow(10, 2)
+                  } $`
+                : ""}
+            </div>
             <div className="main-item_price">
               Market price :{price.USD} $
               <div

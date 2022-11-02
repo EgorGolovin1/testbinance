@@ -1,5 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { data } from "../data/data";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
+import { monets, dataIcons } from "../data/data";
+
+const getTokens = (state) => state.tokens.tokens;
+
+export const getViewToken = createSelector(getTokens, (tokens) => {
+  return tokens.filter((t) => t.favorite);
+});
 
 export const fetchPrices = createAsyncThunk(
   "prices/fetchPrices",
@@ -28,7 +39,8 @@ export const fetchMarketInform = createAsyncThunk(
 );
 
 const initialValue = {
-  tokens: data,
+  tokens: monets,
+  icons: dataIcons,
   filterStatus: "hot",
   prices: {},
   statusPrice: null,
@@ -53,6 +65,20 @@ export const tokensSlice = createSlice({
     changeFilter(state, action) {
       state.filterStatus = action.payload;
     },
+    addToken(state, action) {
+      const id = uuidv4();
+      let src;
+      let way = state.icons.filter((item) => item.src === action.payload.src);
+      if (way.length) {
+        src = way[0].src;
+      } else src = "./unknown.svg";
+      state.tokens.push({
+        ...action.payload,
+        src: src,
+        id: id,
+        main: false,
+      });
+    },
   },
   extraReducers: {
     [fetchPrices.pending]: (state) => {
@@ -74,6 +100,7 @@ export const tokensSlice = createSlice({
   },
 });
 
-export const { showDetails, changeFilter, toggleToken } = tokensSlice.actions;
+export const { showDetails, changeFilter, toggleToken, addToken } =
+  tokensSlice.actions;
 
 export default tokensSlice.reducer;

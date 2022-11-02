@@ -43,18 +43,48 @@
             background: white
             left: 15px
             top: 20px
-            
-            // transform: translateY(-30%)
-        // &::after
-        //     content: ''
-        //     border-top: 2px solid black
-        //     border-right: 2px solid black
-        //     width: 11px
-        //     height: 11px
-        //     transform: rotate(45deg)
-        //     position: absolute
-        //     bottom: 2px
-        //     left: 11px 
+    &_details
+        width: 150px
+        height: fit-content
+        position: relative
+        display: block
+        color: white
+        font-weight: 500
+        font-size: 20px
+        text-decoration: none
+        border: 2px solid #777E90
+        padding: 14px
+        overflow: hidden
+        transition: 1s all ease
+        z-index: 16
+        background-color: rgba(0, 0, 0, 0 )
+        border-radius: 20px
+        cursor: pointer
+        margin: 10px 0 0 50px
+        &::before
+            background: #353945
+            content: ""
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%,-50%)
+            transition: all 0.6s ease
+            width: 0%
+            height: 100%
+            z-index: -1
+        &:hover
+            &::before
+                width: 100%
+    &_amount,&_annotation,&_balance
+        font-size: 20px
+        font-weight: 500
+        color: white
+        margin: 10px 0 0 50px
+    &_annotation
+        font-style: italic
+        word-break: break-all
+        max-width: 380px
+
 
 .info-wrapper
     z-index: 15

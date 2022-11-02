@@ -5,10 +5,12 @@ import CryptoItem from "../crypto-item/crypto-item";
 
 import "./list-item.sass";
 
-const ListItem = ({ tokens, activeFilter }) => {
+const ListItem = ({ tokens, activeFilter, openModal }) => {
   const filteredTokens = tokens.filter((item) => {
     if (activeFilter === "favorite") {
-      return item.favorite === true;
+      return item.favorite;
+    } else if (activeFilter === "wallet") {
+      return console.log(item);
     } else return true;
   });
 
@@ -16,6 +18,7 @@ const ListItem = ({ tokens, activeFilter }) => {
     <div className="crypto-list">
       {filteredTokens.map((item) => (
         <CryptoItem
+          openModal={openModal}
           key={item.id}
           src={item.src}
           id={item.id}
@@ -25,14 +28,15 @@ const ListItem = ({ tokens, activeFilter }) => {
           favorite={item.favorite}
         />
       ))}
-      <img src="./lightning.svg" alt="picture" className="item_back" />
-      <img src="./lightning.svg" alt="picture" className="item_back right" />
+      <img src="./lightning.svg" alt="lightning" className="item_back" />
+      <img src="./lightning.svg" alt="lightning" className="item_back right" />
     </div>
   );
 };
 ListItem.propTypes = {
   tokens: PropTypes.array,
   activeFilter: PropTypes.string,
+  openModal: PropTypes.func,
 };
 
 export default ListItem;
