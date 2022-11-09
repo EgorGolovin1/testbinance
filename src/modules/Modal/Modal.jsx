@@ -26,7 +26,7 @@ const ModalWindow = ({ closeModal }) => {
     dispatch(
       addToken({
         name: data.Name,
-        abbreviation: data.abbreviation,
+        abbreviation: data.Abbreviation,
         src: "./crypto-items/" + upAbr + ".svg",
         myAmount: Number(data.Amount),
         annotation: data.Note,

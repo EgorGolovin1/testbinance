@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import "./main-item.sass";
 
 const MainItem = ({ filteredCryptoArr, price, market }) => {
+  console.log(price.btc);
   let volatility = Math.round(market * Math.pow(10, 2)) / Math.pow(10, 2);
   return (
     <div className="main-item">

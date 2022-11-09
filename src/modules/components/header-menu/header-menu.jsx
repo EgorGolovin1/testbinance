@@ -1,4 +1,7 @@
 import React from "react";
+// import axios from "axios";
+
+// import CryptoItem from "../crypto-item/crypto-item";
 
 import "./header-menu.sass";
 
@@ -24,7 +27,7 @@ const HeaderMenu = () => {
             <input
               type="text"
               className="search_panel"
-              placeholder="Search coin"
+              placeholder="Global search"
             />
             <img alt="111" className="search_icon" src="./search.svg" />
             <button className="search_button">Search</button>

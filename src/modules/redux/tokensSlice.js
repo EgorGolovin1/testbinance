@@ -6,7 +6,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { monets, dataIcons } from "../data/data";
 
-const getTokens = (state) => state.tokens.tokens;
+export const getTokens = (state) => state.tokens.tokens;
 
 export const getViewToken = createSelector(getTokens, (tokens) => {
   return tokens.filter((t) => t.favorite);
