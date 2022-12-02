@@ -4,7 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import { monets, dataIcons } from "../data/data";
+import { coins, dataIcons } from "../data/coins";
 
 export const getTokens = (state) => state.tokens.tokens;
 
@@ -39,7 +39,7 @@ export const fetchMarketInform = createAsyncThunk(
 );
 
 const initialValue = {
-  tokens: monets,
+  tokens: coins,
   icons: dataIcons,
   filterStatus: "hot",
   prices: {},
@@ -55,15 +55,37 @@ export const tokensSlice = createSlice({
     showDetails(state, action) {
       state.tokens.map((item) => {
         if (item.id === action.payload) return (item.main = true);
-        else item.main = false;
+        else return (item.main = false);
       });
     },
     toggleToken(state, action) {
       const token = state.tokens.find((item) => item.id === action.payload);
-      token.favorite = !token.favorite;
+      token.isView = !token.isView;
     },
     changeFilter(state, action) {
       state.filterStatus = action.payload;
+    },
+    editToken(state, action) {
+      const token = state.tokens.find((item) => item.id === action.payload);
+      token.isEditing = !token.isEditing;
+    },
+    deleteToken(state, action) {
+      const tokens = state.tokens.filter((item) => item.id !== action.payload);
+      state.tokens = tokens;
+    },
+    finishEditing(state, action) {
+      let token = state.tokens.find((item) => item.id === action.payload.id);
+      let src;
+      let way = state.icons.filter((item) => item.src === action.payload.src);
+      if (way.length) {
+        src = way[0].src;
+      } else src = "./unknown.svg";
+      token.src = src;
+      token.name = action.payload.name;
+      token.abbreviation = action.payload.abbreviation;
+      token.myAmount = action.payload.myAmount;
+      token.annotation = action.payload.annotation;
+      token.isEditing = false;
     },
     addToken(state, action) {
       const id = uuidv4();
@@ -77,6 +99,8 @@ export const tokensSlice = createSlice({
         src: src,
         id: id,
         main: false,
+        isView: false,
+        isEditing: false,
       });
     },
   },
@@ -100,7 +124,14 @@ export const tokensSlice = createSlice({
   },
 });
 
-export const { showDetails, changeFilter, toggleToken, addToken } =
-  tokensSlice.actions;
+export const {
+  showDetails,
+  changeFilter,
+  toggleToken,
+  addToken,
+  editToken,
+  finishEditing,
+  deleteToken,
+} = tokensSlice.actions;
 
 export default tokensSlice.reducer;

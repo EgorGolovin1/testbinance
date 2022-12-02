@@ -1,12 +1,13 @@
-.banner-wrapper
+.wrapper
     text-align: center
     padding-top: 80px
 
-.banner_text
+.text
     font-weight: 500
     font-family: "Sofia", sans-serif;
     color: white
-.add_button
+    
+.button
     position: relative
     display: block
     color: white
@@ -36,6 +37,18 @@
     &:hover
         &::before
             width: 100%
+
+@media (min-width: 0px) and (max-width: 780px) 
+    .text
+        font-size: 24px
+        margin-top: 10px
+
+    .wrapper
+        min-width: 400px
+
+    .button
+        padding: 8px
+        font-size: 16px
 
             
         

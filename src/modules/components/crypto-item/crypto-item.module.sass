@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:200')        
+        
+
+.item
+  --borderWidth: 2px
+  position: relative
+  background: #131722 
+  align-items: center
+  width: 110px
+  height: 100px
+  font-family: 'Raleway'
+  margin: 20px
+  padding: 5px
+  border-radius: 100%
+  position: relative
+  z-index: 1
+  &:hover
+    .eye
+      display: block
+
+.item:after 
+  content: ''
+  position: absolute
+  top: calc(-1 * var(--borderWidth))
+  left: calc(-1 * var(--borderWidth))
+  height: calc(100% + var(--borderWidth) * 2)
+  width: calc(100% + var(--borderWidth) * 2)
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82)
+  border-radius: calc(2 * var(--borderWidth))
+  z-index: -1
+  animation: animatedgradient 3s ease alternate infinite
+  background-size: 300% 300%
+  border-radius: 100%
+
+
+
+@keyframes animatedgradient 
+	0% 
+		background-position: 0% 50%
+	
+	50% 
+		background-position: 100% 50%
+	
+	100% 
+		background-position: 0% 50%
+
+
+.button
+  height: inherit
+  width: inherit
+  display: flex
+  border-radius: inherit
+  flex-direction: column
+  align-items: center
+  background: #131722
+  color: white
+  text-transform: uppercase
+  font-size: 12px
+  cursor: pointer
+  transition: .4s
+  text-decoration: none
+  &:hover
+    background: rgba(0, 0, 0, 0)
+  &.main
+    background: rgba(0, 0, 0, 0)
+
+.eye
+  width: 30px
+  height: 30px
+  position: absolute
+  background: none
+  border: none
+  left: -33px
+  top: -15px
+  display: none
+  &.isView
+    display: block
+
+.picture
+  width: inherit
+  height: inherit
+  fill: white
+  position: absolute
+  cursor: pointer
+
+.item_picture
+  margin-top: 5px
+  width: 50px
+  height: 50px
+  margin-bottom: 10px
+
+.item_main
+    display: flex
+    z-index: 15
+.picture_main
+    width: 300px
+    height: 300px
+    margin-left: 50px
+    z-index: 15
+.price,.name_main
+    font-size: 40px
+    color: white
+    margin: 50px 0 0 50px
+.name_main
+    font-size: 60px
+    font-weight: 700
+    text-transform: uppercase
+.info
+    min-width: 100px
+    width: fit-content
+    height: 40px
+    background: green
+    padding: 5px 5px 10px 35px
+    position: relative
+    border-radius: 10px
+    &::before
+        content: ''
+        width: 20px
+        height: 4px
+        position: absolute
+        background: white
+        left: 7px
+        top: 28px
+    &::after
+        content: ''
+        width: 4px
+        height: 20px
+        position: absolute
+        background: white
+        left: 15px
+        top: 20px
+    &_down
+        background: red
+        padding-left: 10px 
+        &::before,&::after
+            content: none
+.details_main
+    width: 150px
+    height: fit-content
+    position: relative
+    display: block
+    color: white
+    font-weight: 500
+    font-size: 20px
+    text-decoration: none
+    border: 2px solid #777E90
+    padding: 14px
+    overflow: hidden
+    transition: 1s all ease
+    z-index: 16
+    background-color: rgba(0, 0, 0, 0 )
+    border-radius: 20px
+    cursor: pointer
+    margin: 10px 0 0 50px
+    &::before
+        background: #353945
+        content: ""
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+        transition: all 0.6s ease
+        width: 0%
+        height: 100%
+        z-index: -1
+    &:hover
+        &::before
+            width: 100%
+.amount,.annotation,.balance
+    font-size: 20px
+    font-weight: 500
+    color: white
+    margin: 10px 0 0 50px
+.annotation
+    font-style: italic
+    word-break: break-all
+    max-width: 380px
+
+.unknown_item
+    display: block
+    text-align: center
+    font-size: 20px
+    font-weight: 500
+    color: white
+.wrapper_main
+    z-index: 15
+
+.wapper_secondary
+  display: flex
+  justify-content: center
+  padding: 50px
+
+.button_edit
+  text-align: center
+  font-size: 14px
+  background-color: rgba(0, 0, 0,0 )
+  border: none
+  color: white
+  cursor: pointer
+  width: inherit
+  height: fit-content
+  margin-top: 10px
+  display: flex
+  &:hover
+    color: yellow
+    text-decoration: underline
+.picture_edit
+  width: 25px
+  height: 13px
+
+@media (min-width: 0px) and (max-width: 780px) 
+  .item
+    width: 85px
+    height: 75px
+
+  .button
+    font-size: 10px
+    
+  .item_picture
+    width: 40px
+    height: 40px
+    margin-bottom: 5px
+
+
+	

@@ -1,85 +1,145 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames/bind";
+
+import { tokens, getPrice, getInform } from "../../redux/selectors";
 
 import {
   showDetails,
   fetchPrices,
   toggleToken,
   fetchMarketInform,
+  editToken,
 } from "../../redux/tokensSlice";
 
-import "./crypto-item.sass";
+import classes from "./crypto-item.module.sass";
+import { Link, useParams } from "react-router-dom";
 
-const CryptoItem = ({
-  src,
-  id,
-  name,
-  abbreviation,
-  main,
-  favorite,
-  openModal,
-}) => {
+const CryptoItem = (props) => {
+  const tokensArr = useSelector(tokens);
   const dispatch = useDispatch();
 
-  const makeMain = () => {
-    dispatch(showDetails(id));
-    dispatch(fetchPrices(abbreviation));
-    dispatch(fetchMarketInform(abbreviation));
+  const price = useSelector(getPrice);
+  const marketInform = useSelector(getInform);
+
+  let balance = (price.USD * Math.pow(10, 2)) / Math.pow(10, 2);
+  let volatility = Math.round(marketInform * Math.pow(10, 2)) / Math.pow(10, 2);
+
+  const showInformation = () => {
+    dispatch(showDetails(tokensArr[index].id));
+    dispatch(fetchPrices(tokensArr[index].abbreviation));
+    dispatch(fetchMarketInform(tokensArr[index].abbreviation));
   };
 
-  const doFavorite = () => {
-    dispatch(toggleToken(id));
-    openModal();
+  const viewToken = () => {
+    dispatch(toggleToken(props.id));
+    props.openViewModal();
   };
 
+  const isEdit = () => {
+    dispatch(editToken(props.id));
+    props.openEditModal();
+  };
+
+  const { id } = useParams();
+
+  let index = id - 1;
   return (
-    <div className="item gradient-border  ">
-      {/* <button
-        onClick={() => doFavorite()}
-        className={classNames("star", { favorite: favorite })}
-      >
-        <svg
-          className={classNames("picture", { favorite: favorite })}
-          viewBox="0 0 329.942 329.942"
-        >
-          <path
-            id="XMLID_16_"
-            d="M329.208,126.666c-1.765-5.431-6.459-9.389-12.109-10.209l-95.822-13.922l-42.854-86.837
-            c-2.527-5.12-7.742-8.362-13.451-8.362c-5.71,0-10.925,3.242-13.451,8.362l-42.851,86.836l-95.825,13.922
-            c-5.65,0.821-10.345,4.779-12.109,10.209c-1.764,5.431-0.293,11.392,3.796,15.377l69.339,67.582L57.496,305.07
-            c-0.965,5.628,1.348,11.315,5.967,14.671c2.613,1.899,5.708,2.865,8.818,2.865c2.387,0,4.784-0.569,6.979-1.723l85.711-45.059
-            l85.71,45.059c2.208,1.161,4.626,1.714,7.021,1.723c8.275-0.012,14.979-6.723,14.979-15c0-1.152-0.13-2.275-0.376-3.352
-            l-16.233-94.629l69.339-67.583C329.501,138.057,330.972,132.096,329.208,126.666z"
-          />
-        </svg>
-      </button> */}
-      <button
-        onClick={() => doFavorite()}
-        className={classNames("star", { favorite: favorite })}
-      >
-        <img alt="111" className="picture" src="./view.svg" />
-      </button>
-      <button
-        onClick={() => makeMain()}
-        className={classNames("item_button", { main: main })}
-      >
-        <img src={src} alt="./search.svg" className="item_picture" id={id} />
-        {name}
-      </button>
+    <div className="wrapper">
+      {props.id ? (
+        <div className={classes.item}>
+          <button
+            onClick={() => viewToken()}
+            className={classNames(classes.eye, props.isView && classes.isView)}
+          >
+            <img alt="eye" className={classes.picture} src="./view.svg" />
+          </button>
+          <Link
+            className={classes.button}
+            to={`/items/${tokensArr.findIndex((el) => el.id === props.id) + 1}`}
+          >
+            <img
+              src={props.src}
+              alt="./search.svg"
+              className={classes.item_picture}
+              id={props.id}
+            />
+            {props.name}
+          </Link>
+          <button onClick={() => isEdit()} className={classes.button_edit}>
+            <img src="../edit.svg" alt="pen" className={classes.picture_edit} />
+            Edit token
+          </button>
+        </div>
+      ) : (
+        <div className={classes.wapper_secondary}>
+          <div className={classes.item_main}>
+            <img
+              src={tokensArr[index].src}
+              alt="token"
+              className={classes.picture_main}
+            />
+            <div className={classes.wrapper_main}>
+              <div className={classes.name_main}>{tokensArr[index].name}</div>
+              <button
+                onClick={() => showInformation()}
+                className={classes.details_main}
+              >
+                Details
+              </button>
+              <div className="wrapper2">
+                {tokensArr[index].main ? (
+                  <>
+                    <div className={classes.amount}>
+                      {tokensArr[index].myAmount
+                        ? `My tokens: ${tokensArr[index].myAmount}`
+                        : ""}
+                    </div>
+                    <div className={classes.annotation}>
+                      {tokensArr[index].annotation}
+                    </div>
+                    <div className={classes.balance}>
+                      {tokensArr[index].myAmount
+                        ? `My balance: ${Math.round(
+                            tokensArr[index].myAmount * balance
+                          )} $`
+                        : ""}
+                    </div>
+                    <div className={classes.price}>
+                      Market price : {price.USD} $
+                      <div
+                        className={classNames(
+                          classes.info,
+                          volatility < 0 && classes.info_down
+                        )}
+                      >
+                        {volatility} %
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 CryptoItem.propTypes = {
+  props: PropTypes.object,
   src: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
   abbreviation: PropTypes.string,
+  isView: PropTypes.bool,
+  openViewModal: PropTypes.func,
+  openEditModal: PropTypes.func,
   main: PropTypes.bool,
-  favorite: PropTypes.bool,
-  openModal: PropTypes.func,
 };
 
 export default CryptoItem;

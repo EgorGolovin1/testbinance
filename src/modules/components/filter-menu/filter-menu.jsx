@@ -1,16 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { changeFilter } from "../../redux/tokensSlice";
 
-import classNames from "classnames/bind";
-import PropTypes from "prop-types";
-
-import "./filter-menu.sass";
+import classes from "./filter-menu.module.sass";
 
 const FILTERS_BTN = [
   {
     text: "Favorite",
-    id: "favorite",
+    id: "isView",
   },
   {
     text: "Hot",
@@ -24,29 +19,30 @@ const FILTERS_BTN = [
     text: "Losers",
     id: "losers",
   },
-  {
-    text: "MyWallet",
-    id: "wallet",
-  },
 ];
 
-const FilterMenu = ({ activeFilter }) => {
-  const dispatch = useDispatch();
-
-  const editFilter = (type) => {
-    dispatch(changeFilter(type));
+const FilterMenu = () => {
+  const checkCredit = (age, isJob) => {
+    if (age > 24 && isJob) {
+      return 500;
+    } else if (age > 24) {
+      return 100;
+    }
+    return 0;
   };
+  const checkOpportunityToGetMac = (age, isJob, money) => {
+    if (money >= 2000) {
+      return true;
+    }
+    let opportunity = checkCredit(age, isJob);
+    return opportunity + money > 2000;
+  };
+  console.log(checkOpportunityToGetMac(25, false, 1900));
   return (
-    <div className="container filter">
-      <div className="filter-wrapper">
+    <div className={classes.container}>
+      <div className={classes.wrapper}>
         {FILTERS_BTN.map(({ text, id }) => (
-          <button
-            onClick={() => {
-              editFilter(id);
-            }}
-            key={id}
-            className={classNames("btn", { tabbed: activeFilter === id })}
-          >
+          <button key={id} className={classes.btn}>
             {text}
           </button>
         ))}
@@ -55,22 +51,4 @@ const FilterMenu = ({ activeFilter }) => {
   );
 };
 
-FilterMenu.propTypes = {
-  activeFilter: PropTypes.string,
-};
-
 export default FilterMenu;
-{
-  /* <button href="#" className="filter_button choice">
-          Favorite
-        </button>
-        <button href="#" className="filter_button">
-          Hot
-        </button>
-        <button href="#" className="filter_button">
-          Gainers
-        </button>
-        <button href="#" className="filter_button">
-          Losers
-        </button>  */
-}

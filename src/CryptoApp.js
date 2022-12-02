@@ -1,92 +1,77 @@
 import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import HeaderMenu from "./modules/components/header-menu/header-menu";
-import Banner from "./modules/components/banner/banner";
+import AddMenu from "./modules/components/add-menu/add-menu";
 import FilterMenu from "./modules/components/filter-menu/filter-menu";
-import ListItem from "./modules/components/list-item/list-item";
-import ModalWindow from "./modules/Modal/Modal";
-import Modal from "react-modal";
+import ListItems from "./modules/components/list-items/list-items";
+import CryptoItem from "./modules/components/crypto-item/crypto-item";
+import ViewModalWindow from "./modules/components/modal-windows/view-modal";
+import AddModalWindow from "./modules/components/modal-windows/add-modal";
+import EditModalWindow from "./modules/components/modal-windows/edit-modal";
+// import MainItem from "./modules/components/main-item/main-item";
 
-import "./CryptoApp.sass";
-import MainItem from "./modules/components/main-item/main-item";
-import { useSelector } from "react-redux";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "#434651",
-    padding: "40px 20px",
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-  },
-};
+// import { Layout } from "./modules/components/layout/layout";
 
 const CryptoApp = () => {
-  const tokens = useSelector((state) => {
-    return state.tokens.tokens;
-  });
-
-  const activeFilter = useSelector((state) => {
-    return state.tokens.filterStatus;
-  });
-  const price = useSelector((state) => {
-    return state.tokens.prices;
-  });
-
-  const market = useSelector((state) => {
-    return state.tokens.marketInform;
-  });
-
-  const filteredCryptoArr = tokens.filter((item) => item.main);
-
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  function openModal() {
-    setIsOpen(true);
+  const [modalAddIsOpen, setAddModalIsOpen] = useState(false);
+  function openAddModal() {
+    setAddModalIsOpen(true);
+  }
+  function closeAddModal() {
+    setAddModalIsOpen(false);
   }
 
-  function closeModal() {
-    setIsOpen(false);
+  const [modalViewIsOpen, setViewModalIsOpen] = useState(false);
+  function openViewModal() {
+    setViewModalIsOpen(true);
+  }
+  function closeViewModal() {
+    setViewModalIsOpen(false);
+  }
+
+  const [modalEditIsOpen, setEditModalIsOpen] = useState(false);
+  function openEditModal() {
+    setEditModalIsOpen(true);
+  }
+  function closeEditModal() {
+    setEditModalIsOpen(false);
   }
 
   return (
-    <>
-      <div className="todo-wrapper">
-        <HeaderMenu />
-        <Banner openModal={openModal} />
-        <FilterMenu activeFilter={activeFilter} />
-        <ListItem
-          openModal={openModal}
-          tokens={tokens}
-          activeFilter={activeFilter}
+    <div className="wrapper">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <HeaderMenu />
+              <AddMenu openModal={openAddModal} />
+              <FilterMenu />
+              <ListItems
+                openViewModal={openViewModal}
+                openEditModal={openEditModal}
+              />
+            </>
+          }
         />
-        <MainItem
-          filteredCryptoArr={filteredCryptoArr}
-          price={price}
-          market={market}
-        />
-        <Modal
-          id="modal"
-          ariaHideApp={false}
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <ModalWindow id="crypto" closeModal={closeModal} />
-        </Modal>
-        ;
-      </div>
-    </>
+        <Route path="/items/:id" element={<CryptoItem />}></Route>
+      </Routes>
+      <AddModalWindow
+        onRequestClose={closeAddModal}
+        isOpen={modalAddIsOpen}
+        closeAddModal={closeAddModal}
+      />
+      <ViewModalWindow
+        isOpen={modalViewIsOpen}
+        closeViewModal={closeViewModal}
+      />
+      <EditModalWindow
+        isOpen={modalEditIsOpen}
+        closeEditModal={closeEditModal}
+      />
+    </div>
   );
 };
-
-// ReactDOM.createRoot(<CryptoApp />, document.getElementById("modal"));
 
 export default CryptoApp;

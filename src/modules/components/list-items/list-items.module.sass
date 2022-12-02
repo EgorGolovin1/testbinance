@@ -1,0 +1,59 @@
+.list
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+    flex-direction: row
+    scrollbar-width: thin
+    margin: 50px 50px
+    overflow: hidden
+    z-index: -1
+
+.item,.item_right
+    position: absolute
+    z-index: -1
+    width: 800px
+    height: 450px
+    top: 20px
+    transform: rotate(13deg)
+    left: -450px
+    opacity: 50%
+    &_right
+        top: -140px
+        left: 980px
+        transform: rotate(130deg)
+
+
+
+@media (min-width: 0px) and (max-width: 1260px) 
+    .item,.item_right
+        top: 20px
+        left: -450px
+        &_right
+            top: 140px
+            left: 830px
+
+@media (min-width: 0px) and (max-width: 1090px) 
+    .item,.item_right
+        top: 30px
+        left: -450px
+        &_right
+            top: 100px
+            left: 650px
+
+
+@media (min-width: 0px) and (max-width: 780px) 
+    .list
+        min-width: 300px
+    .item,.item_right
+        top: 90px
+        left: -450px
+        &_right
+            top: 100px
+            left: 400px
+@media (min-width: 0px) and (max-width: 550px) 
+    .item,.item_right
+        top: 135px
+        left: -450px
+        &_right
+            top: 100px
+            left: 400px

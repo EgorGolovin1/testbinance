@@ -1,0 +1,88 @@
+.form
+    display: flex
+    flex-direction: column
+    align-content: center
+    background: #1e222d
+
+.input,.comment
+    width: 300px
+    height: 30px
+    border: none
+    border-radius: 20px
+    background: #d0ebe7
+    margin: 10px 0px 15px 0px
+    padding: 10px 155px 10px 10px
+    display: block
+    word-break: break-all
+    appearance: none
+    -moz-appearance: textfield
+    &:hover
+        appearance: none
+        -moz-appearance: textfield
+    &::placeholder
+        color: black
+        opacity: 70%
+        font-size: 14px
+        font-weight: 500
+        font-family: "Roboto"
+            
+.comment
+    width: 450px
+    height: 90px
+    padding: 10px
+
+.wrapper
+    display: flex
+    justify-content: right
+    margin-top: 10px
+
+.button,.button_delete
+    background: #3772FF
+    border: none
+    width: 80px
+    height: 30px
+    font-size: 16px
+    font-weight: 700
+    border-radius: 10px
+    cursor: pointer
+    margin-left: 15px
+    color: white
+.button_delete
+    background: red
+.label
+    position: relative
+    color: white
+    font-size: 20px
+    font-weight: 700
+
+.error
+    position: absolute
+    top: 28px 
+    right: 12px 
+    color: red
+
+@media (min-width: 0px) and (max-width: 780px) 
+    .input,.comment
+        width: 280px
+        height: 20px
+        margin: 10px 0px 10px 0px
+        padding: 5px 80px 5px 5px
+        &::placeholder
+            font-size: 12px
+            font-weight: 500
+
+    .comment
+        width: 280px
+        height: 60px
+
+    .button
+        width: 50px
+        height: 25px
+        font-size: 12px
+
+    .label
+        font-size: 14px
+        font-weight: 500
+
+    .error
+        top: 20px 

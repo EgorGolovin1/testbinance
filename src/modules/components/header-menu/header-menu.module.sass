@@ -1,0 +1,162 @@
+header
+    position: absolute
+    width: 100%
+    background: -webkit-linear-gradient(to bottom, #ffff, #131722)
+
+.container  
+    max-width: 1170px
+    margin-right: auto
+    margin-left: auto
+    padding: 20px 0px 10px 0px
+
+.wrapper
+    display: flex
+    justify-content: space-around
+
+.logo_wrapper
+    display: flex
+    margin-right: 100px
+    .logo
+        width: 40px
+        height: 40px
+
+.tag
+    margin: 0px 10px
+    text-transform: uppercase
+    color: transparent
+    font-size: 30px
+    font-family: 'Times New Roman', serif
+    letter-spacing: 5px
+    font-weight: 500
+    background-image: linear-gradient(to right, #462523 0, #cb9b51 22%, #f6e27a 45%, #f6f2c0 50%, #f6e27a 55%, #cb9b51 78%, #462523 100%)
+    -webkit-background-clip: text
+
+.panel
+    border: 2px solid #E6E8EC
+    border-radius: 8px
+    padding: 10px 12px 10px 16px
+    gap: 18px
+    width: 256px
+    height: 20px
+
+.icon
+    width: 25px
+    height: 25px
+    position: absolute
+    top: 8px
+    left: 250px
+
+.button
+    background: #3772FF
+    border: none
+    border-radius: 90px
+    width: 80px
+    height: 30px
+    margin-left: 10px
+    cursor: pointer
+    margin-right: 10px
+
+.link
+    font-family: 'Poppins'
+    font-style: normal
+    font-weight: 400
+    font-size: 16px
+    color: #ffffff
+    margin-right: 50px
+    background: rgba(0, 0, 0,0 )
+    border: none
+    width: fit-content
+    cursor: pointer
+    height: 20px
+    margin-top: 10px
+    text-decoration: none
+    &:hover
+        text-decoration: underline
+        color: #ffff00
+
+.input_wrapper
+    position: relative
+    
+.enter_icon
+    transition: all .8s ease
+    width: 25px
+    height: 25px
+    margin-top: 8px
+    cursor: pointer
+    
+@media (min-width: 0px) and (max-width: 1260px) 
+    .container  
+        max-width: 960px
+
+    .logo_wrapper
+        display: flex
+        margin-right: 100px
+        .logo
+            width: 30px
+            height: 30px
+
+    .tag
+        font-size: 24px
+
+    .panel
+        padding: 5px 6px 5px 16px
+        width: 200px
+        height: 20px
+
+    .icon
+        width: 20px
+        height: 20px
+        position: absolute
+        top: 8px
+        left: 190px
+
+    .button
+        display: none
+        
+    .enter_icon
+        transition: all .8s ease
+        width: 20px
+        height: 20px
+        margin-top: 8px
+        cursor: pointer
+
+@media (min-width: 0px) and (max-width: 980px) 
+    .container  
+        max-width: 760px
+
+    .link
+       margin-right: 20px
+       font-size: 12px
+
+    .panel
+        margin-right: 10px
+
+    .logo_wrapper
+        display: flex
+        margin-right: 40px
+
+@media (min-width: 0px) and (max-width: 780px) 
+    .container  
+        max-width: 440px
+
+    .wrapper
+        display: flex
+        justify-content: center
+        min-width: 460px
+
+    .panel
+        display: none
+
+    .icon
+        display: none
+        
+    .logo_wrapper
+        margin-right: 5px
+        margin-top: 10px
+
+    .tag
+        font-size: 18px
+    
+    
+    
+
