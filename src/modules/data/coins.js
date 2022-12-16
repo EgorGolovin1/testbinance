@@ -9,6 +9,7 @@ export const coins = [
     myAmount: 0,
     annotation: "",
     isEditing: false,
+    isView: false,
   },
   {
     src: "../crypto-items/BNB.svg",
@@ -18,6 +19,7 @@ export const coins = [
     myAmount: 0,
     annotation: "",
     isEditing: false,
+    isView: false,
   },
   {
     src: "../crypto-items/ADA.svg",
@@ -27,6 +29,7 @@ export const coins = [
     myAmount: 0,
     annotation: "",
     isEditing: false,
+    isView: false,
   },
   {
     src: "../crypto-items/ETH.svg",
@@ -36,19 +39,19 @@ export const coins = [
     myAmount: 0,
     annotation: "",
     isEditing: false,
+    isView: false,
   },
   {
     src: "../crypto-items/TWT.svg",
     name: "Trust Wallet",
     id: uuidv4(),
     abbreviation: "TWT",
-    isView: false,
     myAmount: 353,
     annotation: "",
     isEditing: false,
+    isView: false,
   },
 ];
-
 export const dataIcons = [
   { src: "../crypto-items/1INCH.svg" },
   { src: "../crypto-items/AAVE.svg" },

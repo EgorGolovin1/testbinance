@@ -1,40 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
 
+import ViewModalWindow from "../modal-windows/view-modal";
+import EditModalWindow from "../modal-windows/edit-modal";
 import CryptoItem from "../crypto-item/crypto-item";
-import SearchForm from "../search-form/search-form";
-import { tokens } from "../../redux/selectors";
-import { useSearchParams } from "react-router-dom";
+import { tokenSelector } from "../../redux/selectors";
+// import { useSearchParams } from "react-router-dom";
 
 import classes from "./list-items.module.sass";
 
-const ListItems = ({ openViewModal, openEditModal }) => {
-  const tokensArr = useSelector(tokens);
-  const [coins, setCoins] = useState(tokensArr);
+const ListItems = () => {
+  const tokens = useSelector(tokenSelector);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [modalViewIsOpen, setViewModalIsOpen] = useState(false);
+  function openViewModal() {
+    setViewModalIsOpen(true);
+  }
+  function closeViewModal() {
+    setViewModalIsOpen(false);
+  }
 
-  let coinQuery = searchParams.get("search") || "";
-
-  const getCoins = () => {
-    setCoins(tokensArr);
-  };
-
-  useEffect(() => {
-    getCoins();
-  });
-
-  const filteredTokens = coins.filter((item) => {
-    return item.name.toLowerCase().includes(coinQuery.toLowerCase());
-  });
+  const [modalEditIsOpen, setEditModalIsOpen] = useState(false);
+  function openEditModal() {
+    setEditModalIsOpen(true);
+  }
+  function closeEditModal() {
+    setEditModalIsOpen(false);
+  }
 
   return (
     <>
-      <SearchForm coinQuery={coinQuery} setSearchParams={setSearchParams} />
       <div className={classes.list}>
-        {filteredTokens.map((item) => (
+        {tokens.map((item) => (
           <CryptoItem
             key={item.id}
             openViewModal={openViewModal}
@@ -51,13 +49,19 @@ const ListItems = ({ openViewModal, openEditModal }) => {
           className={classes.item_right}
         />
       </div>
+      <ViewModalWindow
+        isOpen={modalViewIsOpen}
+        closeViewModal={closeViewModal}
+      />
+      <EditModalWindow
+        isOpen={modalEditIsOpen}
+        closeEditModal={closeEditModal}
+      />
     </>
   );
 };
 ListItems.propTypes = {
   tokensArr: PropTypes.array,
-  openViewModal: PropTypes.func,
-  openEditModal: PropTypes.func,
 };
 
 export default ListItems;

@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames/bind";
+// import { Link } from "react-router-dom";
 
-import { tokens, getPrice, getInform } from "../../redux/selectors";
+import { tokenSelector, getPrice, getInform } from "../../redux/selectors";
 
 import {
   showDetails,
@@ -11,13 +12,16 @@ import {
   toggleToken,
   fetchMarketInform,
   editToken,
+  closeDetails,
 } from "../../redux/tokensSlice";
 
 import classes from "./crypto-item.module.sass";
 import { Link, useParams } from "react-router-dom";
 
 const CryptoItem = (props) => {
-  const tokensArr = useSelector(tokens);
+  const tokens = useSelector(tokenSelector);
+  // const main = useSelector(mainTokenSelector);
+  // console.log(main);
   const dispatch = useDispatch();
 
   const price = useSelector(getPrice);
@@ -27,10 +31,15 @@ const CryptoItem = (props) => {
   let volatility = Math.round(marketInform * Math.pow(10, 2)) / Math.pow(10, 2);
 
   const showInformation = () => {
-    dispatch(showDetails(tokensArr[index].id));
-    dispatch(fetchPrices(tokensArr[index].abbreviation));
-    dispatch(fetchMarketInform(tokensArr[index].abbreviation));
+    dispatch(showDetails(tokens[index].id));
+    dispatch(fetchPrices(tokens[index].abbreviation));
+    dispatch(fetchMarketInform(tokens[index].abbreviation));
   };
+
+  const hideInformation = () => {
+    dispatch(closeDetails(tokens[index].id));
+  };
+
 
   const viewToken = () => {
     dispatch(toggleToken(props.id));
@@ -57,7 +66,7 @@ const CryptoItem = (props) => {
           </button>
           <Link
             className={classes.button}
-            to={`/items/${tokensArr.findIndex((el) => el.id === props.id) + 1}`}
+            to={`/items/${tokens.findIndex((el) => el.id === props.id) + 1}`}
           >
             <img
               src={props.src}
@@ -76,33 +85,42 @@ const CryptoItem = (props) => {
         <div className={classes.wapper_secondary}>
           <div className={classes.item_main}>
             <img
-              src={tokensArr[index].src}
+              src={tokens[index].src}
               alt="token"
               className={classes.picture_main}
             />
             <div className={classes.wrapper_main}>
-              <div className={classes.name_main}>{tokensArr[index].name}</div>
+              <div className={classes.name_main}>{tokens[index].name}</div>
               <button
                 onClick={() => showInformation()}
                 className={classes.details_main}
               >
                 Details
               </button>
+              <Link to="/">
+                <button
+                  onClick={() => hideInformation()}
+                  className={classes.details_main}
+                >
+                  Close
+                </button>
+              </Link>
+
               <div className="wrapper2">
-                {tokensArr[index].main ? (
+                {tokens[index].main ? (
                   <>
                     <div className={classes.amount}>
-                      {tokensArr[index].myAmount
-                        ? `My tokens: ${tokensArr[index].myAmount}`
+                      {tokens[index].myAmount
+                        ? `My tokens: ${tokens[index].myAmount}`
                         : ""}
                     </div>
                     <div className={classes.annotation}>
-                      {tokensArr[index].annotation}
+                      {tokens[index].annotation}
                     </div>
                     <div className={classes.balance}>
-                      {tokensArr[index].myAmount
+                      {tokens[index].myAmount
                         ? `My balance: ${Math.round(
-                            tokensArr[index].myAmount * balance
+                            tokens[index].myAmount * balance
                           )} $`
                         : ""}
                     </div>

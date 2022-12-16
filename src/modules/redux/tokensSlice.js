@@ -6,9 +6,9 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { coins, dataIcons } from "../data/coins";
 
-export const getTokens = (state) => state.tokens.tokens;
+export const rootSelector = (state) => state.tokens.tokens;
 
-export const getViewToken = createSelector(getTokens, (tokens) => {
+export const viewTokenSelector = createSelector(rootSelector, (tokens) => {
   return tokens.filter((t) => t.favorite);
 });
 
@@ -41,6 +41,7 @@ export const fetchMarketInform = createAsyncThunk(
 const initialValue = {
   tokens: coins,
   icons: dataIcons,
+  searchParam: "",
   filterStatus: "hot",
   prices: {},
   statusPrice: null,
@@ -57,6 +58,10 @@ export const tokensSlice = createSlice({
         if (item.id === action.payload) return (item.main = true);
         else return (item.main = false);
       });
+    },
+    closeDetails(state, action) {
+      const token = state.tokens.find((item) => item.id === action.payload);
+      token.main = false;
     },
     toggleToken(state, action) {
       const token = state.tokens.find((item) => item.id === action.payload);
@@ -75,12 +80,9 @@ export const tokensSlice = createSlice({
     },
     finishEditing(state, action) {
       let token = state.tokens.find((item) => item.id === action.payload.id);
-      let src;
-      let way = state.icons.filter((item) => item.src === action.payload.src);
-      if (way.length) {
-        src = way[0].src;
-      } else src = "./unknown.svg";
-      token.src = src;
+      token.src =
+        state.icons.find((item) => item.src === action.payload.src)?.src ||
+        "./unknown.svg";
       token.name = action.payload.name;
       token.abbreviation = action.payload.abbreviation;
       token.myAmount = action.payload.myAmount;
@@ -89,19 +91,19 @@ export const tokensSlice = createSlice({
     },
     addToken(state, action) {
       const id = uuidv4();
-      let src;
-      let way = state.icons.filter((item) => item.src === action.payload.src);
-      if (way.length) {
-        src = way[0].src;
-      } else src = "./unknown.svg";
       state.tokens.push({
         ...action.payload,
-        src: src,
+        src:
+          state.icons.find((item) => item.src == action.payload.src)?.src ||
+          "./unknown.svg",
         id: id,
         main: false,
         isView: false,
         isEditing: false,
       });
+    },
+    searchToken(state, action) {
+      state.searchParam = action.payload;
     },
   },
   extraReducers: {
@@ -132,6 +134,8 @@ export const {
   editToken,
   finishEditing,
   deleteToken,
+  closeDetails,
+  searchToken,
 } = tokensSlice.actions;
 
 export default tokensSlice.reducer;

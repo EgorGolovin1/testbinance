@@ -22,22 +22,6 @@ const FILTERS_BTN = [
 ];
 
 const FilterMenu = () => {
-  const checkCredit = (age, isJob) => {
-    if (age > 24 && isJob) {
-      return 500;
-    } else if (age > 24) {
-      return 100;
-    }
-    return 0;
-  };
-  const checkOpportunityToGetMac = (age, isJob, money) => {
-    if (money >= 2000) {
-      return true;
-    }
-    let opportunity = checkCredit(age, isJob);
-    return opportunity + money > 2000;
-  };
-  console.log(checkOpportunityToGetMac(25, false, 1900));
   return (
     <div className={classes.container}>
       <div className={classes.wrapper}>
